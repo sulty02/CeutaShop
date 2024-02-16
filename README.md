@@ -4,8 +4,8 @@
 - Para conexión con la base de datos (Función estática)
 
 ## Producto
-- CRUD
-- Función estática: 
+- CRUD 
+- Función estática:
   - obtenerProductos (clientes)
   - obtenerProductoByID
   - nuevoProducto
@@ -52,6 +52,20 @@
 ## Administración.php
 - Vista principal del index.php en caso de que el usuario de la sesión tenga “role negocio”.
 - Tendrá un a href para añadir producto.
+
+<?php  
+    include_once("Model/Producto.php");
+    include_once("Views/Assets/Templates/AperturaIndex.php");
+
+
+    if(isset($SESSION[‘usuario’]) && ($_SESSION[‘usuario’][‘role’] == “cliente” || $_SESSION[‘usuario’][‘role’] == “invitado”){
+        include_once("Views/Productos.php");
+    }else if(isset($SESSION[‘usuario’]) && $SESSION[‘usuario’][‘role’] == “negocio”){
+        include_once("Views/Administracion.php");
+    }  
+   
+    include_once("Views/Assets/Templates/Cierre.php");
+?>
 
 # Otras Vistas
 
