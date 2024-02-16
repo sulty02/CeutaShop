@@ -56,70 +56,72 @@
             //Si no existe un registro con ese username se procede con el registro.
             if($consulta->fetchColumn() < 0){
                 try{
-                    //Ciframos la contraseña
+                    //Ciframos la contraseña.
                     $passwordHash = password_hash($usuario->password, PASSWORD_ARGON2I);
 
                     $stmt = $conexion->prepare($insert);
-                    $stmt->bindParam(":titulo", $usuario->username);
-                    $stmt->bindParam(":contenido", $usuario->email);
-                    $stmt->bindParam(":fecha", $usuario->telefono);
-                    $stmt->bindParam(":titulo", $passwordHash);
-                    $stmt->bindParam(":contenido", $usuario->role);
+                    $stmt->bindParam(":username", $usuario->username);
+                    $stmt->bindParam(":email", $usuario->email);
+                    $stmt->bindParam(":telefono", $usuario->telefono);
+                    $stmt->bindParam(":password", $passwordHash);
+                    $stmt->bindParam(":role", $usuario->role);
 
                     $stmt->execute();
 
                     //Verificamos si se ha insertado el usuario.
                     if($stmt->rowCount() > 0){
-                        return "Te has registrado correctamente.";
+                        echo "<h2>Cuenta registrada con éxito.</h2>";
                     }else{
-                        return "No se ha podido completar el registro.";
+                        echo "<h2>No se ha podido completar el registro.</h2>";
                     }
                 }catch(PDOException $error) {
-                    return "Error " . $error->getCode() . ": " . $error->getMessage();
+                    echo "<h2>Error " . $error->getCode() . ": " . $error->getMessage() . "</h2>";
                 }
             }else{
                 echo "<h2>El nombre de usuario ya está registrado. Por favor, elige otro.</h2>";
             }
         }
 
-        //Recoge los datos del form post mediante el controller iniciarSesion.php. Controller: si devuelve true se redirige al index, si no muestra mensaje.
+        //OK / Recoge los datos del form post mediante el controller iniciarSesion.php. Controller: si devuelve true se redirige al index, si no muestra mensaje.
         public static function iniciarSesion($username, $password){
             $conexion = CeutaShopDB::conectarDB();
 
-            // Preparar la consulta con un marcador de posición
-            $consultaUsuario = $conexion->prepare("SELECT username, password, role FROM usuario WHERE username = :username");
+            //Preparamos la consulta para obtener el usuario por su username.
+            $consultaUsuario = $conexion->prepare("SELECT id, username, password, role FROM usuario WHERE username = :username");
             $consultaUsuario->bindParam(':username', $username, PDO::PARAM_STR);
             
-            // Ejecutar la consulta
+            //Ejecutar la consulta.
             $consultaUsuario->execute();
         
-            // Obtener la información del usuario
+            //Obtenemos la información del usuario.
             $datosUsuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
         
-            // Si se encuentra el usuario
-            if ($datosUsuario) {
-                // Si la contraseña obtenida del formulario es igual a la obtenida del registro
+            // Si se encuentra el usuario:
+            if($datosUsuario){
+                //Si la contraseña obtenida del formulario es igual a la obtenida del registro del usuario:
                 if (password_verify($password, $datosUsuario['password'])) {
-                    // Iniciar la sesión
+                    //Iniciar la sesión.
                     session_start();
         
-                    // Crear el usuario en la sesión con el username y el role
+                    //Guardar en la sesión con el id, username y role.
                     $_SESSION['usuario'] = [
+                        'id' => $datosUsuario['id'],
                         'username' => $datosUsuario['username'],
                         'role' => $datosUsuario['role']
                     ];
         
-                    // Cerrar la conexión de la base de datos y redirigir al index
-                    $conexion = null; // Cerramos la conexión usando null
+                    //Cerramos la conexión de la base de datos.
+                    $conexion = null;
+                    return true;
                 } else {
-                    //Cerramos la conexión y mostramos un mensaje de error.
-                    $conexion = null; // Cerramos la conexión usando null
-                    return "La contraseña no es correcta";
+                    //Cerramos la conexión y devolvemos un mensaje de error.
+                    $conexion = null;
+                    echo "<h2>La contraseña no es correcta</h2>";
                 }
             } else {
-                //Cerramos la conexión y mostramos un mensaje de error.
+                //Cerramos la conexión y devolvemos un mensaje de error.
                 $conexion = null;
-                echo "No existe ningún usuario con ese nombre";
+                echo "<h2>No se ha encontrado ningún usuario con ese nombre</h2>";
             }
         }
 
@@ -129,7 +131,7 @@
         }
         //...................................................................................................
 
-        //OK
+        //OK / Elimina tanto el usuario como el negocio si el role es negocio. Por lo que en el Model Negocio no hay un delete.
         public static function deleteUsuarioByUsername(){
             $conexion = CeutaShopDB::conectarDB();
 

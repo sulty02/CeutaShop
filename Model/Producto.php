@@ -89,12 +89,12 @@
             }
         }
 
-//..................................................................................................................
+
 
         /*Al recoger los datos en el controlador se crea un objeto Producto con los datos. 
         Ese objeto llamará a la función. Si $_SESSION["usuario"]["role"] == "negocio"se 
         tiene que obtener el idUsuario del negocio para insertar/modificar/eliminar el producto.*/
-        public function insertProductoByIDUsuario($idUsuario){
+        /*public function insertProductoByIDUsuario($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
             
             $insert = "INSERT INTO producto (nombre, descripcion, tipo, categorias, talla, precio, idNegocio) VALUES (:nombre, :descripcion, :tipo, :categorias, :talla, :precio, :idNegocio);";
@@ -131,7 +131,7 @@
             return "";
         }
 
-//....................................................................................................................
+*/
 
     //OK
         public function getID(){
@@ -183,11 +183,11 @@
             $this->precio = $precio;
         }
 
-        public function getIDTienda(){
-            return $this->idTienda;
+        public function getIDNegocio(){
+            return $this->idNegocio;
         }
-        public function setIDTienda($idTienda){
-            $this->idTienda = $idTienda;
+        public function setIDNegocio($idNegocio){
+            $this->idNegocio = $idNegocio;
         }
     }
 ?>
