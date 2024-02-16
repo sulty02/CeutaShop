@@ -81,12 +81,15 @@
 
     if(isset($_SESSION['usuario']) && ($_SESSION['usuario']['role'] == "cliente" || $_SESSION['usuario']['role'] == "invitado")){
         include_once("Views/Productos.php");
+        <a href="iniciarSesion.php">Iniciar sesión</a>
     } else if(isset($_SESSION['usuario']) && $_SESSION['usuario']['role'] == "negocio"){
         include_once("Views/Administracion.php");
+        <a href="cerrarSesion.php">Cerrar sesión</a>
     }  
    
     include_once("Views/Assets/Templates/Cierre.php");
 ?>
+```
 
 # BASE DE DATOS
 
