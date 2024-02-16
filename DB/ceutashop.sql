@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2024 a las 13:33:06
+-- Tiempo de generación: 16-02-2024 a las 14:01:07
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -49,6 +49,7 @@ CREATE TABLE `producto` (
   `descripción` varchar(245) NOT NULL,
   `tipo` varchar(50) NOT NULL,
   `categorias` varchar(245) NOT NULL,
+  `talla` varchar(20) NOT NULL,
   `precio` float NOT NULL,
   `idTienda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -76,7 +77,8 @@ CREATE TABLE `usuario` (
   `username` varchar(25) NOT NULL,
   `email` varchar(35) NOT NULL,
   `telefono` varchar(9) NOT NULL,
-  `password` varchar(245) NOT NULL
+  `password` varchar(245) NOT NULL,
+  `role` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -93,7 +95,16 @@ ALTER TABLE `negocio`
 -- Indices de la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_producto_negocio` (`idTienda`);
+
+--
+-- Indices de la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  ADD KEY `fk_reserva_usuario` (`idCliente`),
+  ADD KEY `fk_reserva_producto` (`idProducto`),
+  ADD KEY `fk_reserva_negocio` (`idNegocio`);
 
 --
 -- Indices de la tabla `usuario`
@@ -122,6 +133,24 @@ ALTER TABLE `producto`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD CONSTRAINT `fk_producto_negocio` FOREIGN KEY (`idTienda`) REFERENCES `negocio` (`id`);
+
+--
+-- Filtros para la tabla `reserva`
+--
+ALTER TABLE `reserva`
+  ADD CONSTRAINT `fk_reserva_negocio` FOREIGN KEY (`idNegocio`) REFERENCES `negocio` (`id`),
+  ADD CONSTRAINT `fk_reserva_producto` FOREIGN KEY (`idProducto`) REFERENCES `producto` (`id`),
+  ADD CONSTRAINT `fk_reserva_usuario` FOREIGN KEY (`idCliente`) REFERENCES `usuario` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

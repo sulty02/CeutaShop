@@ -1,51 +1,26 @@
 <?php
 /*Jorge Muñoz García*/
     require_once("CeutaShopDB.php");
-
+    
     //Esta clase servirá como plantilla para realizar operaciones CRUD en su tabla correspondiente.
-    class Producto{
+    class Usuario{
         private string $id;
-        private string $nombre;
-        private string $descripcion;
-        private string $tipo;
-        private string $categorias;
-        private string $talla;
-        private float $precio;
-        private string $idTienda;
+        private string $username;
+        private string $email;
+        private int $telefono;
+        private string $password;
+        private string $role;
 
-        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $id="", $idTienda=""){
-            $this->nombre = $nombre;
-            $this->descripcion = $descripcion;
-            $this->tipo = $tipo;
-            $this->categorias = $categorias;
-            $this->talla = $talla;
-            $this->precio = $precio;
+        public function __construct($username, $email, $telefono, $password, $role, $id=""){
+            $this->username = $username;
+            $this->email = $email;
+            $this->telefono = $telefono;
+            $this->password = $password;
+            $this->role = $role;
             $this->id = $id;
-            $this->idTienda = $idTienda;
         }
 
-        public static function getProductos(){
-            $conexion = CeutaShopDB::conectarDB();
-            $articulos = array();
-            
-            $select = "SELECT * FROM articulo;";
-            $stmt = $conexion->prepare($select);
-            $stmt->execute();
-
-            //Obtenemos todos los resultados en un array asociativo.
-            $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
-            foreach($filas as $fila){
-                $articulo = new Articulo($fila['titulo'], $fila['contenido'], $fila['fecha'], $fila['id']);
-                array_push($articulos, $articulo);
-            }
-
-            //Devolvemos el array de objetos.
-            return $articulos;
-        }
-
-        public static function getProductoByID($idProducto){
+        public static function getUsuarioByID($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
             
             $select = "SELECT * FROM articulo WHERE id=:id;";
@@ -65,7 +40,7 @@
             }
         }
 
-        public static function getArticulosByNegocio($idNegocio){
+        public static function getReservasUsuario($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
             
             $select = "SELECT * FROM articulo WHERE id=:id;";
@@ -129,53 +104,39 @@
             $this->id = $id;
         }
 
-        public function getNombre(){
-            return $this->nombre;
+        public function getUsername(){
+            return $this->username;
         }
-        public function setNombre($nombre){
-            $this->nombre = $nombre;
-        }
-
-        public function getDescripcion(){
-            return $this->descripcion;
-        }
-        public function setDescripcion($descripcion){
-            $this->descripcion = $descripcion;
+        public function setUsername($username){
+            $this->username = $username;
         }
 
-        public function getTipo(){
-            return $this->tipo;
+        public function getEmail(){
+            return $this->email;
         }
-        public function setTipo($tipo){
-            $this->tipo = $tipo;
-        }
-
-        public function getCategorias(){
-            return $this->categorias;
-        }
-        public function setCategorias($categorias){
-            $this->categorias = $categorias;
-        }
-        
-        public function getTalla(){
-            return $this->talla;
-        }
-        public function setTalla($talla){
-            $this->talla = $talla;
+        public function setEmail($email){
+            $this->email = $email;
         }
 
-        public function getPrecio(){
-            return $this->precio;
+        public function getTelefono(){
+            return $this->telefono;
         }
-        public function setPrecio($precio){
-            $this->precio = $precio;
+        public function setTelefono($telefono){
+            $this->telefono = $telefono;
         }
 
-        public function getIDTienda(){
-            return $this->idTienda;
+        public function getPassword(){
+            return $this->password;
         }
-        public function setIDTienda($idTienda){
-            $this->idTienda = $idTienda;
+        public function setPassword($password){
+            $this->password = $password;
+        }
+
+        public function getRole(){
+            return $this->role;
+        }
+        public function setRole($role){
+            $this->role = $role;
         }
     }
 ?>
