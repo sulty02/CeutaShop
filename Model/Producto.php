@@ -11,9 +11,10 @@
         private string $categorias;
         private string $talla;
         private float $precio;
-        private string $idTienda;
+        private string $idNegocio;
 
-        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $id="", $idTienda=""){
+        //OK
+        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $id="", $idNegocio=""){
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
             $this->tipo = $tipo;
@@ -21,14 +22,15 @@
             $this->talla = $talla;
             $this->precio = $precio;
             $this->id = $id;
-            $this->idTienda = $idTienda;
+            $this->idNegocio = $idNegocio;
         }
 
+        //OK
         public static function getProductos(){
             $conexion = CeutaShopDB::conectarDB();
-            $articulos = array();
+            $productos = array();
             
-            $select = "SELECT * FROM articulo;";
+            $select = "SELECT * FROM producto;";
             $stmt = $conexion->prepare($select);
             $stmt->execute();
 
@@ -37,18 +39,19 @@
 
             //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
             foreach($filas as $fila){
-                $articulo = new Articulo($fila['titulo'], $fila['contenido'], $fila['fecha'], $fila['id']);
-                array_push($articulos, $articulo);
+                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['id'], $fila['idTienda']);
+                array_push($productos, $producto);
             }
 
             //Devolvemos el array de objetos.
-            return $articulos;
+            return $productos;
         }
 
+        //OK
         public static function getProductoByID($idProducto){
             $conexion = CeutaShopDB::conectarDB();
             
-            $select = "SELECT * FROM articulo WHERE id=:id;";
+            $select = "SELECT * FROM producto WHERE id=:id;";
             
             $stmt = $conexion->prepare($select);
             $stmt->bindParam(":id", $idProducto);
@@ -59,19 +62,20 @@
 
             //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
             if($resultado){
-                return new Articulo($resultado['titulo'], $resultado['contenido'], $resultado['fecha'], $resultado['id']);
+                return new Producto($resultado['nombre'], $resultado['descripcion'], $resultado['tipo'], $resultado['categorias'], $resultado['talla'], $resultado['precio'], $resultado['id'], $resultado['idTienda']);
             }else{
                 return "No se ha encontrado ningún producto con ese id.";
             }
         }
 
-        public static function getArticulosByNegocio($idNegocio){
+        //OK
+        public static function getProductosByIDNegocio($idNegocio){
             $conexion = CeutaShopDB::conectarDB();
             
-            $select = "SELECT * FROM articulo WHERE id=:id;";
+            $select = "SELECT * FROM producto WHERE idNegocio=:idNegocio;";
             
             $stmt = $conexion->prepare($select);
-            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":idNegocio", $idNegocio);
 
             $stmt->execute();
 
@@ -79,16 +83,21 @@
 
             //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
             if($resultado){
-                return new Articulo($resultado['titulo'], $resultado['contenido'], $resultado['fecha'], $resultado['id']);
+                return new Producto($resultado['nombre'], $resultado['descripcion'], $resultado['tipo'], $resultado['categorias'], $resultado['talla'], $resultado['precio'], $resultado['id'], $resultado['idTienda']);
             }else{
-                return "No se ha encontrado ningún articulo con ese id.";
+                return "No se ha encontrado ningún producto con ese id.";
             }
         }
 
-        public function insert(){
+//..................................................................................................................
+
+        /*Al recoger los datos en el controlador se crea un objeto Producto con los datos. 
+        Ese objeto llamará a la función. Si $_SESSION["usuario"]["role"] == "negocio"se 
+        tiene que obtener el idUsuario del negocio para insertar/modificar/eliminar el producto.*/
+        public function insertProductoByIDUsuario($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
             
-            $insert = "INSERT INTO articulo (titulo, contenido, fecha) VALUES (:titulo, :contenido, :fecha);";
+            $insert = "INSERT INTO producto (nombre, descripcion, tipo, categorias, talla, precio, idNegocio) VALUES (:nombre, :descripcion, :tipo, :categorias, :talla, :precio, :idNegocio);";
             
             try{
                 $stmt = $conexion->prepare($insert);
@@ -109,10 +118,10 @@
             }
         }
 
-        public static function delete($id){
+        public static function deleteProductoByIDUsuario($idNegocio){
             $conexion = CeutaShopDB::conectarDB();
             
-            $delete = "DELETE FROM articulo WHERE id=:id;";
+            $delete = "DELETE FROM producto WHERE id=:id;";
             
             $stmt = $conexion->prepare($delete);
             $stmt->bindParam(":id", $id);
@@ -122,6 +131,9 @@
             return "";
         }
 
+//....................................................................................................................
+
+    //OK
         public function getID(){
             return $this->id;
         }

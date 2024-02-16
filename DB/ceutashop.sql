@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2024 a las 14:01:07
+-- Tiempo de generación: 16-02-2024 a las 18:24:27
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -51,7 +51,7 @@ CREATE TABLE `producto` (
   `categorias` varchar(245) NOT NULL,
   `talla` varchar(20) NOT NULL,
   `precio` float NOT NULL,
-  `idTienda` int(11) NOT NULL
+  `idNegocio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +96,7 @@ ALTER TABLE `negocio`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_producto_negocio` (`idTienda`);
+  ADD KEY `fk_producto_negocio` (`idNegocio`);
 
 --
 -- Indices de la tabla `reserva`
@@ -142,7 +142,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
-  ADD CONSTRAINT `fk_producto_negocio` FOREIGN KEY (`idTienda`) REFERENCES `negocio` (`id`);
+  ADD CONSTRAINT `fk_producto_negocio` FOREIGN KEY (`idNegocio`) REFERENCES `negocio` (`id`);
 
 --
 -- Filtros para la tabla `reserva`

@@ -11,8 +11,9 @@
         private string $telefono;
         private string $calle;
         private string $horario;
+        private string $idUsuario;
 
-        public function __construct($nombre, $descripcion, $email, $telefono, $calle, $horario, $id=""){
+        public function __construct($nombre, $descripcion, $email, $telefono, $calle, $horario, $id="", $idUsuario=""){
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
             $this->email = $email;
@@ -20,6 +21,7 @@
             $this->calle = $calle;
             $this->horario = $horario;
             $this->id = $id;
+            $this->idUsuario = $idUsuario;
         }
 
         public static function getProductos(){
@@ -125,6 +127,13 @@
         }
         public function setID($id){
             $this->id = $id;
+        }
+
+        public function getIDUsuario(){
+            return $this->idUsuario;
+        }
+        public function setIDUsuario($idUsuario){
+            $this->idUsuario = $idUsuario;
         }
 
         public function getNombre(){

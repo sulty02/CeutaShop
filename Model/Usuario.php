@@ -11,6 +11,7 @@
         private string $password;
         private string $role;
 
+        //OK
         public function __construct($username, $email, $telefono, $password, $role, $id=""){
             $this->username = $username;
             $this->email = $email;
@@ -20,13 +21,14 @@
             $this->id = $id;
         }
 
+        //OK
         public static function getUsuarioByID($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
             
-            $select = "SELECT * FROM articulo WHERE id=:id;";
+            $select = "SELECT * FROM usuario WHERE id=:id;";
             
             $stmt = $conexion->prepare($select);
-            $stmt->bindParam(":id", $idProducto);
+            $stmt->bindParam(":id", $idUsuario);
 
             $stmt->execute();
 
@@ -34,69 +36,129 @@
 
             //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
             if($resultado){
-                return new Articulo($resultado['titulo'], $resultado['contenido'], $resultado['fecha'], $resultado['id']);
+                return new Usuario($resultado['username'], $resultado['email'], $resultado['telefono'], $resultado['password'], $resultado['role'], $resultado['id']);
             }else{
                 return "No se ha encontrado ningún producto con ese id.";
             }
         }
 
-        public static function getReservasUsuario($idUsuario){
+        //OK / Se recogen los datos del form en el controlador, se crea un objeto y se le pasa a la función.
+        public static function registrarUsuario($usuario){
             $conexion = CeutaShopDB::conectarDB();
             
-            $select = "SELECT * FROM articulo WHERE id=:id;";
+            $insert = "INSERT INTO usuario (username, email, telefono, password, role) VALUES (:username, :email, :telefono, :password, :role);";
             
-            $stmt = $conexion->prepare($select);
-            $stmt->bindParam(":id", $id);
+            //Consultamos en la base de datos si hay un usuario con ese nombre.
+            $consulta = $conexion->prepare("SELECT COUNT(*) FROM usuario WHERE username = :username");
+            $consulta->bindParam(':username', $usuario->username, PDO::PARAM_STR);
+            $consulta->execute();
 
-            $stmt->execute();
+            //Si no existe un registro con ese username se procede con el registro.
+            if($consulta->fetchColumn() < 0){
+                try{
+                    //Ciframos la contraseña
+                    $passwordHash = password_hash($usuario->password, PASSWORD_ARGON2I);
 
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt = $conexion->prepare($insert);
+                    $stmt->bindParam(":titulo", $usuario->username);
+                    $stmt->bindParam(":contenido", $usuario->email);
+                    $stmt->bindParam(":fecha", $usuario->telefono);
+                    $stmt->bindParam(":titulo", $passwordHash);
+                    $stmt->bindParam(":contenido", $usuario->role);
 
-            //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
-            if($resultado){
-                return new Articulo($resultado['titulo'], $resultado['contenido'], $resultado['fecha'], $resultado['id']);
-            }else{
-                return "No se ha encontrado ningún articulo con ese id.";
-            }
-        }
+                    $stmt->execute();
 
-        public function insert(){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $insert = "INSERT INTO articulo (titulo, contenido, fecha) VALUES (:titulo, :contenido, :fecha);";
-            
-            try{
-                $stmt = $conexion->prepare($insert);
-                $stmt->bindParam(":titulo", $this->titulo);
-                $stmt->bindParam(":contenido", $this->contenido);
-                $stmt->bindParam(":fecha", $this->fecha);
-
-                $stmt->execute();
-
-                //Verificamos si se ha insertado el elemento.
-                if($stmt->rowCount() > 0){
-                    return "Se han insertado los datos correctamente.";
-                }else{
-                    return "No se han insertado los datos. Puede que ya exista un artículo con el mismo título.";
+                    //Verificamos si se ha insertado el usuario.
+                    if($stmt->rowCount() > 0){
+                        return "Te has registrado correctamente.";
+                    }else{
+                        return "No se ha podido completar el registro.";
+                    }
+                }catch(PDOException $error) {
+                    return "Error " . $error->getCode() . ": " . $error->getMessage();
                 }
-            }catch(PDOException $error) {
-                return "Error " . $error->getCode() . ": " . $error->getMessage();
+            }else{
+                echo "<h2>El nombre de usuario ya está registrado. Por favor, elige otro.</h2>";
             }
         }
 
-        public static function delete($id){
+        //Recoge los datos del form post mediante el controller iniciarSesion.php. Controller: si devuelve true se redirige al index, si no muestra mensaje.
+        public static function iniciarSesion($username, $password){
             $conexion = CeutaShopDB::conectarDB();
-            
-            $delete = "DELETE FROM articulo WHERE id=:id;";
-            
-            $stmt = $conexion->prepare($delete);
-            $stmt->bindParam(":id", $id);
 
-            $stmt->execute();
-
-            return "";
+            // Preparar la consulta con un marcador de posición
+            $consultaUsuario = $conexion->prepare("SELECT username, password, role FROM usuario WHERE username = :username");
+            $consultaUsuario->bindParam(':username', $username, PDO::PARAM_STR);
+            
+            // Ejecutar la consulta
+            $consultaUsuario->execute();
+        
+            // Obtener la información del usuario
+            $datosUsuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
+        
+            // Si se encuentra el usuario
+            if ($datosUsuario) {
+                // Si la contraseña obtenida del formulario es igual a la obtenida del registro
+                if (password_verify($password, $datosUsuario['password'])) {
+                    // Iniciar la sesión
+                    session_start();
+        
+                    // Crear el usuario en la sesión con el username y el role
+                    $_SESSION['usuario'] = [
+                        'username' => $datosUsuario['username'],
+                        'role' => $datosUsuario['role']
+                    ];
+        
+                    // Cerrar la conexión de la base de datos y redirigir al index
+                    $conexion = null; // Cerramos la conexión usando null
+                } else {
+                    //Cerramos la conexión y mostramos un mensaje de error.
+                    $conexion = null; // Cerramos la conexión usando null
+                    return "La contraseña no es correcta";
+                }
+            } else {
+                //Cerramos la conexión y mostramos un mensaje de error.
+                $conexion = null;
+                echo "No existe ningún usuario con ese nombre";
+            }
         }
 
+        //...................................................................................................
+        public static function updateUsuario(){
+            
+        }
+        //...................................................................................................
+
+        //OK
+        public static function deleteUsuarioByUsername(){
+            $conexion = CeutaShopDB::conectarDB();
+
+            //Si es un usuario de negocio se elimina de la tabla usuario y de la tabla negocio. 
+            if($_SESSION["username"]["role"] == "negocio"){
+                //Obtenemos idUsuario por username.
+                $selectIdUsuario = "SELECT idUsuario FROM usuario WHERE username=:username;";
+                $stmtSelectIdUsuario = $conexion->prepare($selectIdUsuario);
+                $stmtSelectIdUsuario->bindParam(":username", $_SESSION["username"]);
+                $stmtSelectIdUsuario->execute();
+                $idUsuario = $stmtSelectIdUsuario->fetchColumn();
+
+                //Eliminamos el registro de la tabla negocio.
+                $deleteNegocio = "DELETE FROM negocio WHERE idUsuario=:idUsuario;";
+                $stmtDeleteNegocio = $conexion->prepare($deleteNegocio);
+                $stmtDeleteNegocio->bindParam(":idUsuario", $idUsuario);
+                $stmtDeleteNegocio->execute();
+            }
+
+            //Si el usuario es cliente se elimina solo de la tabla usuario.
+            $deleteUsuario = "DELETE FROM usuario WHERE username=:username;";
+            $stmtDeleteUsuario = $conexion->prepare($deleteUsuario);
+            $stmtDeleteUsuario->bindParam(":username", $_SESSION["username"]);
+            $stmtDeleteUsuario->execute();
+
+            header("Location: ../index.php");
+        }
+
+    //OK
         public function getID(){
             return $this->id;
         }
