@@ -6,7 +6,7 @@
                 <meta name='viewport' content='width=device-width, initial-scale=1.0'>
                 <link rel='stylesheet' href='Assets/CSS/InsertarForm.css'>
                 <script src='Assets/JS/ReestablecerForm.js'></script>
-                <title>Publicar artículo</title>
+                <title>Añadir producto</title>
             </head>
             <body>
             <header>

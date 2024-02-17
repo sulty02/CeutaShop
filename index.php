@@ -19,6 +19,8 @@
         }else{
             include_once("View/Assets/Templates/CrearNegocioForm.php");
         }
+        
+    //Si el usuario es cliente o invitado se muestran los productos.
     }else if(isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "invitado" || $_SESSION["usuario"]["role"] == "cliente")){
         include_once("View/Productos.php");
     }

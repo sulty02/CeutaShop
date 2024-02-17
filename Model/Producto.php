@@ -11,16 +11,18 @@
         private string $categorias;
         private string $talla;
         private float $precio;
+        private string $imagen;
         private string $idNegocio;
 
         //OK
-        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $id="", $idNegocio=""){
+        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $imagen, $id="", $idNegocio=""){
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
             $this->tipo = $tipo;
             $this->categorias = $categorias;
             $this->talla = $talla;
             $this->precio = $precio;
+            $this->imagen = $imagen;
             $this->id = $id;
             $this->idNegocio = $idNegocio;
         }
@@ -39,7 +41,7 @@
 
             //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
             foreach($filas as $fila){
-                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['id'], $fila['idTienda']);
+                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idTienda']);
                 array_push($productos, $producto);
             }
 
@@ -181,6 +183,13 @@
         }
         public function setPrecio($precio){
             $this->precio = $precio;
+        }
+
+        public function getImagen(){
+            return $this->imagen;
+        }
+        public function setImagen($imagen){
+            $this->precio = $imagen;
         }
 
         public function getIDNegocio(){

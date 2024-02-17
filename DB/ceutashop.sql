@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2024 a las 18:24:27
+-- Tiempo de generación: 17-02-2024 a las 04:28:43
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -34,7 +34,8 @@ CREATE TABLE `negocio` (
   `email` varchar(50) NOT NULL,
   `telefono` varchar(9) NOT NULL,
   `calle` varchar(100) NOT NULL,
-  `horario` varchar(100) NOT NULL
+  `horario` varchar(100) NOT NULL,
+  `idUsuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -51,6 +52,7 @@ CREATE TABLE `producto` (
   `categorias` varchar(245) NOT NULL,
   `talla` varchar(20) NOT NULL,
   `precio` float NOT NULL,
+  `imagen` longblob NOT NULL,
   `idNegocio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -89,7 +91,8 @@ CREATE TABLE `usuario` (
 -- Indices de la tabla `negocio`
 --
 ALTER TABLE `negocio`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_negocio_usuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `producto`
@@ -137,6 +140,12 @@ ALTER TABLE `usuario`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `negocio`
+--
+ALTER TABLE `negocio`
+  ADD CONSTRAINT `fk_negocio_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `producto`
