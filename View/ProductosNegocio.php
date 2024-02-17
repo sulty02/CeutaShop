@@ -2,8 +2,6 @@
     <?php
         include_once("Model/Producto.php");
 
-        session_start();
-
         $idNegocio = $_SESSION["usuario"]["id"];
         //Obtenemos los artículos de la base de datos.
         $productos = Producto::getProductos();
@@ -13,12 +11,9 @@
             foreach($productos as $producto){
                 echo "<div class='producto'>
                         <h2>" . $producto->getNombre() . "</h2>
+                        <img src='data:image/jpeg;base64,". base64_encode($producto->getImagen()) . "'/>
                         <p>" . $producto->getDescripcion() . "</p>
-                        <p>" . $producto->getTipo() . "</p>
-                        <p>" . $producto->getCategorias() . "</p>
-                        <p>" . $producto->getTalla() . "</p>
-                        <p>" . $producto->getPrecio() . "</p>
-                        <img src='". base64_decode($producto->getImagen()) . "'/>
+                        <p><strong>" . $producto->getPrecio() . "€</strong></p>
                         <a class='boton' href='Controller/EditarProducto.php?id=" . $producto->getID() . "&numOperacion=1'>Editar</a>
                         <a class='boton' href='Controller/EliminarProducto.php?id=" . $producto->getID() . "&numOperacion=2'>Eliminar</a>
                     </div>";

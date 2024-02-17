@@ -1,7 +1,7 @@
 <?php
-    function verificarNegocio(){
-        session_start();
+    include_once("Model/CeutaShopDB.php");
 
+    function verificarNegocio(){
         $idUsuario = $_SESSION["usuario"]["id"];
 
         $conexion = CeutaShopDB::conectarDB();

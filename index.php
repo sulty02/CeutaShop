@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    $_SESSION["usuario"] = ["role" => "invitado"];
+    //$_SESSION["usuario"] = ["role" => "negocio", "id" => "1"];
 
     include_once("View/Assets/Templates/AperturaIndex.php");
 
@@ -21,7 +21,7 @@
         }
         
     //Si el usuario es cliente o invitado se muestran los productos.
-    }else if(isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "invitado" || $_SESSION["usuario"]["role"] == "cliente")){
+    }else if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "invitado" || $_SESSION["usuario"]["role"] == "cliente"))){
         include_once("View/Productos.php");
     }
 

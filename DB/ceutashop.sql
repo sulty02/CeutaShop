@@ -23,6 +23,8 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+USE `ceutashop`;
+
 --
 -- Estructura de tabla para la tabla `negocio`
 --
