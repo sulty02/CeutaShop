@@ -24,47 +24,6 @@
             $this->id = $id;
         }
 
-        public static function getProductos(){
-            $conexion = CeutaShopDB::conectarDB();
-            $articulos = array();
-            
-            $select = "SELECT * FROM articulo;";
-            $stmt = $conexion->prepare($select);
-            $stmt->execute();
-
-            //Obtenemos todos los resultados en un array asociativo.
-            $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
-            foreach($filas as $fila){
-                $articulo = new Articulo($fila['titulo'], $fila['contenido'], $fila['fecha'], $fila['id']);
-                array_push($articulos, $articulo);
-            }
-
-            //Devolvemos el array de objetos.
-            return $articulos;
-        }
-
-        public static function getArticuloByID($idProducto){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $select = "SELECT * FROM articulo WHERE id=:id;";
-            
-            $stmt = $conexion->prepare($select);
-            $stmt->bindParam(":id", $idProducto);
-
-            $stmt->execute();
-
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
-            if($resultado){
-                return new Articulo($resultado['titulo'], $resultado['contenido'], $resultado['fecha'], $resultado['id']);
-            }else{
-                return "No se ha encontrado ningún producto con ese id.";
-            }
-        }
-
         //HACERLO YA!!!!! Se crea un objeto Negocio en el controller y se le pasa por parámetros. / Si devuleve true se redirige al index.
         public static function registrarNegocio($negocio){
             $conexion = CeutaShopDB::conectarDB();

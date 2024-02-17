@@ -46,39 +46,45 @@
         public static function registrarUsuario($usuario){
             $conexion = CeutaShopDB::conectarDB();
             
+            //Obtenemos los datos y la contraseña cifrada.
+            $username = $usuario->getUsername();
+            $email = $usuario->getEmail();
+            $telefono = $usuario->getTelefono();
+            $passwordHash = password_hash($usuario->getPassword(), PASSWORD_ARGON2I);
+            $role = $usuario->getRole();
+
             $insert = "INSERT INTO usuario (username, email, telefono, password, role) VALUES (:username, :email, :telefono, :password, :role);";
             
             //Consultamos en la base de datos si hay un usuario con ese nombre.
-            $consulta = $conexion->prepare("SELECT COUNT(*) FROM usuario WHERE username = :username");
-            $consulta->bindParam(':username', $usuario->username, PDO::PARAM_STR);
+            $consulta = $conexion->prepare("SELECT COUNT(*) FROM usuario WHERE username = :username;");
+            $consulta->bindParam(':username', $username, PDO::PARAM_STR);
             $consulta->execute();
 
-            //Si no existe un registro con ese username se procede con el registro.
-            if($consulta->fetchColumn() < 0){
-                try{
-                    //Ciframos la contraseña.
-                    $passwordHash = password_hash($usuario->password, PASSWORD_ARGON2I);
+            $usuarioExistente = $consulta->fetchColumn();
 
+            //Si no existe un registro con ese username se procede con el registro.
+            if($usuarioExistente == 0){
+                try{
                     $stmt = $conexion->prepare($insert);
-                    $stmt->bindParam(":username", $usuario->username);
-                    $stmt->bindParam(":email", $usuario->email);
-                    $stmt->bindParam(":telefono", $usuario->telefono);
+                    $stmt->bindParam(":username", $username);
+                    $stmt->bindParam(":email", $email);
+                    $stmt->bindParam(":telefono", $telefono);
                     $stmt->bindParam(":password", $passwordHash);
-                    $stmt->bindParam(":role", $usuario->role);
+                    $stmt->bindParam(":role", $role);
 
                     $stmt->execute();
 
                     //Verificamos si se ha insertado el usuario.
                     if($stmt->rowCount() > 0){
-                        echo "<h2>Cuenta registrada con éxito.</h2>";
+                        return 1;
                     }else{
-                        echo "<h2>No se ha podido completar el registro.</h2>";
+                        return 2;
                     }
                 }catch(PDOException $error) {
-                    echo "<h2>Error " . $error->getCode() . ": " . $error->getMessage() . "</h2>";
+                    return "Error " . $error->getCode() . ": " . $error->getMessage();
                 }
             }else{
-                echo "<h2>El nombre de usuario ya está registrado. Por favor, elige otro.</h2>";
+                return 3;
             }
         }
 
@@ -96,10 +102,10 @@
             //Obtenemos la información del usuario.
             $datosUsuario = $consultaUsuario->fetch(PDO::FETCH_ASSOC);
         
-            // Si se encuentra el usuario:
+            //Si se encuentra el usuario:
             if($datosUsuario){
                 //Si la contraseña obtenida del formulario es igual a la obtenida del registro del usuario:
-                if (password_verify($password, $datosUsuario['password'])) {
+                if(password_verify($password, $datosUsuario['password'])){
                     //Iniciar la sesión.
                     session_start();
         
@@ -112,16 +118,16 @@
         
                     //Cerramos la conexión de la base de datos.
                     $conexion = null;
-                    return true;
-                } else {
+                    return 1;
+                }else{
                     //Cerramos la conexión y devolvemos un mensaje de error.
                     $conexion = null;
-                    echo "<h2>La contraseña no es correcta</h2>";
+                    return 2;
                 }
-            } else {
+            }else{
                 //Cerramos la conexión y devolvemos un mensaje de error.
                 $conexion = null;
-                echo "<h2>No se ha encontrado ningún usuario con ese nombre</h2>";
+                return 3;
             }
         }
 

@@ -1,4 +1,6 @@
 <?php
+    include_once("../Model/Usuario.php");
+
     if(isset($_POST["registrar"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST["username"];
         $email = $_POST["email"];
@@ -7,6 +9,8 @@
         $role = $_POST["rol"];
 
         $usuario = new Usuario($username, $email, $telefono, $password, $role);
-        Usuario::registrarUsuario($usuario);
+        $resultado = Usuario::registrarUsuario($usuario);
+        
+        header("Location: ../View/LogUsuariosForm.php?resultadoRegistro=$resultado");
     }
 ?>

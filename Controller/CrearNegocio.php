@@ -6,7 +6,7 @@
         $telefono = $_POST["telefono"];
         $calle = $_POST["calle"];
         $horario = $_POST["horario"];
-        $idUsuario = $_SERVER["username"]["id"];
+        $idUsuario = $_SESSION["username"]["id"];
 
         $negocio = new Negocio($nombre, $descripcion, $email, $telefono, $calle, $horario, $idUsuario);
 

@@ -24,7 +24,7 @@
 
                 //Si aún no se ha iniado la sesión con un usuario se muestra el botón iniciar sesión.
                 if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "invitado")){
-                    echo "<a class='boton' href='View/IniciarSesion.php'>Iniciar sesión</a>";
+                    echo "<a class='boton' href='View/LogUsuariosForm.php'>Iniciar sesión</a>";
                 
                 //Si se ha iniciado la sesión con un usuario con role negocio o cliente se muestra el botón cerrar sesión.
                 }else if(isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "negocio" || $_SESSION["usuario"]["role"] == "cliente")){
