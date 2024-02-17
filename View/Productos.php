@@ -9,13 +9,12 @@
             foreach($productos as $producto){
                 echo "<div class='producto'>
                         <h2>" . $producto->getNombre() . "</h2>
-                        <p>" . $producto->getDescripcion() . "</p>
-                        <p>" . $producto->getTipo() . "</p>
-                        <p>" . $producto->getCategorias() . "</p>
-                        <p>" . $producto->getTalla() . "</p>
-                        <p>" . $producto->getTalla() . "</p>
+                        <p>Descripción: " . $producto->getDescripcion() . "</p>
+                        <p>Tipo: " . $producto->getTipo() . "</p>
+                        <p>Categorías: " . $producto->getCategorias() . "</p>
+                        <p>Talla: " . $producto->getTalla() . "</p>
                         <p>" . $producto->getPrecio() . "</p>
-                        <img src='". base64_encode($producto->getImagen()) . "'/>
+                        <img src='data:image/jpeg;base64,". base64_encode($producto->getImagen()) . "'/>
                         <a class='boton' href='Controller/CarritoProducto.php?id=" . $producto->getIDNegocio() . "&numOperacion=2'>Añadir al carrito</a>
                     </div>";
             }

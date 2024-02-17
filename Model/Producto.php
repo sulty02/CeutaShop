@@ -41,7 +41,7 @@
 
             //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
             foreach($filas as $fila){
-                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idTienda']);
+                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
                 array_push($productos, $producto);
             }
 
