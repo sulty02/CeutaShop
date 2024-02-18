@@ -4,7 +4,7 @@
         //Obtenemos los artículos de la base de datos.
         $productos = Producto::getProductos();
 
-        if(count($productos) > 0){
+        if(isset($productos) && count($productos) > 0){
             //Recorremos el array mostrando cada artículo en un div.
             foreach($productos as $producto){
                 echo "<div class='producto'>

@@ -64,32 +64,50 @@
 
             //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
             if($resultado){
-                return new Producto($resultado['nombre'], $resultado['descripcion'], $resultado['tipo'], $resultado['categorias'], $resultado['talla'], $resultado['precio'], $resultado['id'], $resultado['idTienda']);
+                return new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
             }else{
                 return "No se ha encontrado ningún producto con ese id.";
             }
         }
 
-        //OK
-        public static function getProductosByIDNegocio($idNegocio){
+        //OK / Se obtiene el id de $_SESSION["usuario"]["id"] del usuario con role negocio para obtener el id del negocio.
+        public static function getProductosByIDUsuario($idUsuario){
             $conexion = CeutaShopDB::conectarDB();
-            
-            $select = "SELECT * FROM producto WHERE idNegocio=:idNegocio;";
-            
-            $stmt = $conexion->prepare($select);
-            $stmt->bindParam(":idNegocio", $idNegocio);
-
-            $stmt->execute();
-
-            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
-            if($resultado){
-                return new Producto($resultado['nombre'], $resultado['descripcion'], $resultado['tipo'], $resultado['categorias'], $resultado['talla'], $resultado['precio'], $resultado['id'], $resultado['idTienda']);
-            }else{
-                return "No se ha encontrado ningún producto con ese id.";
+        
+            //Obtener el idNegocio del usuario actual.
+            $selectNegocio = "SELECT id FROM negocio WHERE idUsuario=:idUsuario;";
+        
+            $stmtNegocio = $conexion->prepare($selectNegocio);
+            $stmtNegocio->bindParam(":idUsuario", $idUsuario);
+            $stmtNegocio->execute();
+        
+            $resultadoNegocio = $stmtNegocio->fetch(PDO::FETCH_ASSOC);
+        
+            //Verificamos si se obtuvo el idNegocio.
+            if($resultadoNegocio && isset($resultadoNegocio['id'])) {
+                $idNegocio = $resultadoNegocio['id'];
+        
+                // Obtener todos los productos del negocio.
+                $selectProductos = "SELECT * FROM producto WHERE idNegocio=:idNegocio;";
+        
+                $stmtProductos = $conexion->prepare($selectProductos);
+                $stmtProductos->bindParam(":idNegocio", $idNegocio);
+                $stmtProductos->execute();
+        
+                $productos = array();
+        
+                // Obtener todos los productos del negocio.
+                while($fila = $stmtProductos->fetch(PDO::FETCH_ASSOC)){
+                    $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
+                    array_push($productos, $producto);
+                }
+        
+                return $productos;
+            } else {
+                return "No se encontró el negocio asociado al usuario.";
             }
-        }
+        }        
+        
 
 
 
@@ -110,7 +128,7 @@
                 $stmt->execute();
 
                 //Verificamos si se ha insertado el elemento.
-                if($stmt->rowCount() > 0){
+                if($stmt->filaCount() > 0){
                     return "Se han insertado los datos correctamente.";
                 }else{
                     return "No se han insertado los datos. Puede que ya exista un artículo con el mismo título.";

@@ -17,7 +17,7 @@
 
         //Si no existe el negocio se muestra la vista del formulario para crear el negocio.
         }else{
-            include_once("View/Assets/Templates/CrearNegocioForm.php");
+            include_once("View/CrearNegocioForm.php");
         }
         
     //Si el usuario es cliente o invitado se muestran los productos.

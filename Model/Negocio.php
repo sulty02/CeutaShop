@@ -28,17 +28,25 @@
         public static function registrarNegocio($negocio){
             $conexion = CeutaShopDB::conectarDB();
             
+            $nombre = $negocio->getNombre();
+            $descripcion = $negocio->getDescripcion();
+            $email = $negocio->getEmail();
+            $telefono = $negocio->getTelefono();
+            $calle = $negocio->getCalle();
+            $horario = $negocio->getHorario();
+            $idUsuario = $negocio->getIDUsuario();
+
             $insert = "INSERT INTO negocio (nombre, descripcion, email, telefono, calle, horario, idUsuario) VALUES (:nombre, :descripcion, :email, :telefono, :calle, :horario, :idUsuario);";
             
             try{
                 $stmt = $conexion->prepare($insert);
-                $stmt->bindParam(":nombre", $negocio->nombre);
-                $stmt->bindParam(":descripcion", $negocio->descripcion);
-                $stmt->bindParam(":email", $negocio->email);
-                $stmt->bindParam(":telefono", $negocio->telefono);
-                $stmt->bindParam(":calle", $negocio->calle);
-                $stmt->bindParam(":horario", $negocio->horario);
-                $stmt->bindParam(":idUsuario", $negocio->idUsuario);
+                $stmt->bindParam(":nombre", $nombre);
+                $stmt->bindParam(":descripcion", $descripcion);
+                $stmt->bindParam(":email", $email);
+                $stmt->bindParam(":telefono", $telefono);
+                $stmt->bindParam(":calle", $calle);
+                $stmt->bindParam(":horario", $horario);
+                $stmt->bindParam(":idUsuario", $idUsuario);
 
                 $stmt->execute();
 

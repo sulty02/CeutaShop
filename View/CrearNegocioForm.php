@@ -1,29 +1,37 @@
 <?php
-    echo "<form action='Controller/CrearNegocio.php' method='POST'>
-            <label>Nombre: <input type='text' name='nombre'></label>
-            
-            <p></p>
-            
-            <label>Descripción: <input type='text' name='descripcion'></label>
-            
-            <p></p>
-            
-            <label>Email: <input type='text' name='email'></label>
-            
-            <p></p>
-            
-            <label>Teléfono: <input type='text' name='telefono'></label>
-            
-            <p></p>
-            
-            <label>Calle: <input type='text' name='calle'></label>
-            
-            <p></p>
-            
-            <label>Horario: <input type='text' name='horario'></label>
-            
-            <p></p>
+    echo "<div class='formulario-container'>
+            <form class='formulario' action='Controller/CrearNegocio.php' method='POST'>
+                <label>Nombre:</label>
+                <input type='text' name='nombre'>
+                
+                <p></p>
+                
+                <label>Descripción:</label>
+                <input type='text' name='descripcion'>
+                
+                <p></p>
+                
+                <label>Email:</label>
+                <input type='text' name='email'>
+                
+                <p></p>
+                
+                <label>Teléfono:</label>
+                <input type='text' name='telefono'>
+                
+                <p></p>
+                
+                <label>Calle:</label>
+                <input type='text' name='calle'>
+                
+                <p></p>
+                
+                <label>Horario:</label>
+                <input type='text' name='horario'>
+                
+                <p></p>
 
-            <input type='submit' name='crear' value='Crear negocio'>
-        </form>";
+                <input type='submit' name='crear' value='Crear negocio'>
+            </form>
+        </div>";
 ?>
