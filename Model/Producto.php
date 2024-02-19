@@ -11,17 +11,19 @@
         private string $categorias;
         private string $talla;
         private float $precio;
+        private string $unidades;
         private string $imagen;
         private string $idNegocio;
 
         //OK
-        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $imagen, $id="", $idNegocio=""){
+        public function __construct($nombre, $descripcion, $tipo, $categorias, $talla, $precio, $unidades, $imagen, $id="", $idNegocio=""){
             $this->nombre = $nombre;
             $this->descripcion = $descripcion;
             $this->tipo = $tipo;
             $this->categorias = $categorias;
             $this->talla = $talla;
             $this->precio = $precio;
+            $this->unidades = $unidades;
             $this->imagen = $imagen;
             $this->id = $id;
             $this->idNegocio = $idNegocio;
@@ -41,7 +43,7 @@
 
             //Recorremos cada resultado para crear un objeto con los datos y guardarlos en el array.
             foreach($filas as $fila){
-                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
+                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['unidades'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
                 array_push($productos, $producto);
             }
 
@@ -64,7 +66,7 @@
 
             //Si se ha encontrado un artículo con ese id devolvemos un nuevo objeto Articulo con los datos obtenidos.
             if($resultado){
-                return new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
+                return new Producto($resultado['nombre'], $resultado['descripcion'], $resultado['tipo'], $resultado['categorias'], $resultado['talla'], $resultado['precio'], $resultado['unidades'], $resultado['imagen'], $resultado['id'], $resultado['idNegocio']);
             }else{
                 return "No se ha encontrado ningún producto con ese id.";
             }
@@ -98,7 +100,7 @@
         
                 // Obtener todos los productos del negocio.
                 while($fila = $stmtProductos->fetch(PDO::FETCH_ASSOC)){
-                    $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
+                    $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['unidades'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
                     array_push($productos, $producto);
                 }
         
@@ -201,6 +203,13 @@
         }
         public function setPrecio($precio){
             $this->precio = $precio;
+        }
+        
+        public function getUnidades(){
+            return $this->unidades;
+        }
+        public function setUnidades($unidades){
+            $this->unidades = $unidades;
         }
 
         public function getImagen(){

@@ -61,6 +61,62 @@
             }
         }
 
+        public static function obtenerNegocioByIDProducto($idProducto){
+            $conexion = CeutaShopDB::conectarDB();
+            
+            //Obtener el idNegocio del producto actual.
+            $selectNegocio = "SELECT idNegocio FROM producto WHERE id=:id;";
+            
+            $stmtNegocio = $conexion->prepare($selectNegocio);
+            $stmtNegocio->bindParam(":id", $idProducto);
+            $stmtNegocio->execute();
+            
+            $resultadoNegocio = $stmtNegocio->fetch(PDO::FETCH_ASSOC);
+            
+            //Verificamos si se obtuvo el idNegocio.
+            if($resultadoNegocio && isset($resultadoNegocio['idNegocio'])) {
+                $idNegocio = $resultadoNegocio['idNegocio'];
+                
+                //Obtener los datos del negocio.
+                $selectNegocioDatos = "SELECT * FROM negocio WHERE id=:id;";
+                
+                $stmtNegocioDatos = $conexion->prepare($selectNegocioDatos);
+                $stmtNegocioDatos->bindParam(":id", $idNegocio);
+                $stmtNegocioDatos->execute();
+                
+                $negocio = $stmtNegocioDatos->fetch(PDO::FETCH_ASSOC);
+                
+                //Verificar si se encontraron datos del negocio.
+                if($negocio) {
+                    return $negocio;
+                } else {
+                    return "No se encontraron datos del negocio asociado al producto.";
+                }
+            } else {
+                return "No se encontró el negocio asociado al producto.";
+            }
+        }        
+
+        public static function obtenerNegocioByIDUsuario($idUsuario){
+            $conexion = CeutaShopDB::conectarDB();
+            
+            // Obtener el negocio asociado al usuario.
+            $selectNegocio = "SELECT * FROM negocio WHERE idUsuario=:idUsuario;";
+            
+            $stmtNegocio = $conexion->prepare($selectNegocio);
+            $stmtNegocio->bindParam(":idUsuario", $idUsuario);
+            $stmtNegocio->execute();
+            
+            $resultadoNegocio = $stmtNegocio->fetch(PDO::FETCH_ASSOC);
+            
+            // Verificamos si se obtuvo el resultado.
+            if($resultadoNegocio) {
+                return $resultadoNegocio;
+            } else {
+                return "No se encontró el negocio asociado al usuario.";
+            }
+        }        
+
         public function getID(){
             return $this->id;
         }

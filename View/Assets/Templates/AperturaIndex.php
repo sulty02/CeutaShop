@@ -29,6 +29,8 @@
                 //Si se ha iniciado la sesión con un usuario con role negocio o cliente se muestra el botón cerrar sesión.
                 }else if(isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "negocio" || $_SESSION["usuario"]["role"] == "cliente")){
                     echo "<a class='boton' href='Controller/CerrarSesion.php'>Cerrar sesión</a>";
+                    echo "<a class='boton' href='Controller/Reservas.php'>Mis reservas</a>";
+                    echo "<a class='boton' href='View/EditarPerfilForm.php'>Editar perfil</a>";
                 }
                      
             echo "</header>";
