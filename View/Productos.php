@@ -25,7 +25,7 @@
                                 <p><strong>" . $producto->getPrecio() . "€</strong></p>
                                 <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
                                 <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
-                                <a class='boton' href='javascript:void(0);' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
+                                <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
                             </div>
                     </div>";
             }

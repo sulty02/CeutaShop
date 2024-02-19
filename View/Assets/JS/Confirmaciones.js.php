@@ -48,7 +48,7 @@ function comprobarSesion(idProducto, idNegocio, unidades){
     sesionModal.style.display = "block";
 
     /Función para cerrar el modal
-    confirmarSesionBtn.onclick = function() {
+    confirmarSesionBtn.onclick = function(){
       sesionModal.style.display = "none";
     };
   }
