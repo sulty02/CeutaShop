@@ -1,3 +1,7 @@
+function confirmarCerrarSesion(){
+  
+}
+
 function confirmarEliminarProducto(idProducto) {
   //Mostrar el modal
   var modal = document.getElementById("myModal");

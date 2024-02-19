@@ -6,12 +6,12 @@
           <html lang='es'>
             <head>
                 <meta charset='UTF-8'>
-                <meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+                <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+                <script src='View/Assets/JS/Confirmaciones.js'></script>";
                 
             //Si la sesión se ha iniciado con role negocio se carga el CSS negocio.
             if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
                 echo "<link rel='stylesheet' href='View/Assets/CSS/IndexNegocio.css'>";
-                echo "<script src='View/Assets/JS/Confirmaciones.js'></script>";
                 
             //Con cualquier otra sesión se muestra el CSS de cliente.
             }else if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente")){
