@@ -10,7 +10,6 @@
     
     //Si se ha iniciado la sesión con role negocio:
     if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
-        
         //Si el negocio existe se muestra la vista de los productos del negocio.
         if(verificarNegocio() == true){
             include_once("View/ProductosNegocio.php");
