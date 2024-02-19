@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+
     echo "<div class='formulario-container'>
             <form class='formulario' action='Controller/CrearNegocio.php' method='POST'>
                 <label>Nombre:</label>

@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+    
     include_once("../Model/Usuario.php");
 
     if(isset($_POST["registrar"]) && $_SERVER["REQUEST_METHOD"] == "POST"){

@@ -1,6 +1,7 @@
 <h2>Tus productos: </h2>
 <div class="productos-container">
     <?php
+    /*Jorge Muñoz García y Mohamed Abdeselam*/
         include_once("Model/Producto.php");
         include_once("Model/Negocio.php");
 
@@ -24,10 +25,10 @@
                             <h2>" . $producto->getNombre() . "</h2>
                             <p>" . $producto->getDescripcion() . "</p>
                             <p><strong>" . $producto->getPrecio() . "€</strong></p>
-                            <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
                             <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
-                            <a class='boton' href='Controller/EditarProducto.php?id=" . $producto->getID() . "&numOperacion=1'>Editar</a>
-                            <a class='boton' href='Controller/EliminarProducto.php?id=" . $producto->getID() . "&numOperacion=2'>Eliminar</a>
+                            <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
+                            <a class='boton' href='View/EditarProductoForm.php?id=" . $producto->getID() . "'>Editar</a>
+                            <a class='boton' onclick='confirmarEliminarProducto(" . $producto->getID() . ")'>Eliminar</a>
                         </div>
                     </div>";
             }
@@ -35,5 +36,4 @@
             echo "<h2>Aún no hay productos disponibles</h2>";
         }
     ?>
-    
 </div>

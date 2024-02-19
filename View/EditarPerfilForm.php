@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+
     require_once("../Model/Usuario.php");
     require_once("../Model/Negocio.php");
 

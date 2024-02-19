@@ -1,5 +1,5 @@
 <?php
-/*Jorge Muñoz García*/
+/*Mohamed Abdeselam*/
     require_once("CeutaShopDB.php");
 
     //Esta clase servirá como plantilla para realizar operaciones CRUD en su tabla correspondiente.
@@ -110,7 +110,32 @@
             }
         }        
         
+        //OK
+        public static function eliminarProducto($idProducto){
+            try {
+                $conexion = CeutaShopDB::conectarDB();
 
+                $sql = "DELETE FROM producto WHERE id = :idProducto";
+        
+                $stmt = $conexion->prepare($sql);
+                
+                $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
+                
+                $stmt->execute();
+                
+                $filasAfectadas = $stmt->rowCount();
+                
+                if($filasAfectadas > 0){
+                    return true;
+                }
+
+                $conexion = null;
+            } catch (PDOException $e) {
+                $conexion = null;
+                echo "Error: " . $e->getMessage();
+                return false;
+            }
+        }
 
 
         /*Al recoger los datos en el controlador se crea un objeto Producto con los datos. 

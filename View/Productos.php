@@ -1,5 +1,6 @@
 <div class="productos-container">
     <?php
+    /*Jorge Muñoz García*/
         include_once("Model/Producto.php");
         include_once("Model/Negocio.php");
 
@@ -22,8 +23,8 @@
                                 <h2>" . $producto->getNombre() . "</h2>
                                 <p>" . $producto->getDescripcion() . "</p>
                                 <p><strong>" . $producto->getPrecio() . "€</strong></p>
-                                <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
                                 <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
+                                <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
                                 <a class='boton' href='Controller/Carrito.php?idProducto=" . $idProducto . "&idNegocio=" . $idNegocio . "&unidades=" . $producto->getUnidades() . "'>Añadir al carrito</a>
                             </div>
                     </div>";

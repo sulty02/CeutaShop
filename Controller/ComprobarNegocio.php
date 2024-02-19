@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+    
     include_once("Model/CeutaShopDB.php");
 
     function verificarNegocio(){

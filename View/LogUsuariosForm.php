@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+
     session_start();
 
     if(isset($_SESSION['usuario'])){
