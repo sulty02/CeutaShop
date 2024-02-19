@@ -26,6 +26,7 @@
     //Si el usuario es cliente se muestran los productos y el carrito.
     }else if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente"){
         include_once("View/Productos.php");
+        include_once("View/CarritoTabla.php");
         //include_once("View/Carrito.php");
     }
 

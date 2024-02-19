@@ -1,5 +1,5 @@
 <?php
-/*Jorge Muñoz García*/
+/*Jorge Muñoz García y Mohamed Abdeselam*/
     require_once("CeutaShopDB.php");
     
     //Esta clase servirá como plantilla para realizar operaciones CRUD en su tabla correspondiente.
@@ -24,7 +24,7 @@
             $this->id = $id;
         }
 
-        //HACERLO YA!!!!! Se crea un objeto Negocio en el controller y se le pasa por parámetros. / Si devuleve true se redirige al index.
+        //Se crea un objeto Negocio en el controller y se le pasa por parámetros. / Si devuleve true se redirige al index.
         public static function registrarNegocio($negocio){
             $conexion = CeutaShopDB::conectarDB();
             
