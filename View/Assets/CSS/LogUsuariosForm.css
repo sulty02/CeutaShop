@@ -5,6 +5,17 @@ body {
     padding: 0;
 }
 
+.boton {
+    display: inline-block;
+    margin-top: 3vh;
+    margin-left: 80px;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
 .contenedor-formulario {
     display: flex;
     justify-content: center;

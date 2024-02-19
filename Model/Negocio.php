@@ -117,6 +117,48 @@
             }
         }        
 
+        public static function updateNegocio($idUsuario, $nuevoNombre, $nuevaDescripcion, $nuevoEmail, $nuevoTelefono, $nuevaCalle, $nuevoHorario){
+            try{
+                $conexion = CeutaShopDB::conectarDB();
+        
+                //Obtenemos el id del negocio mediante el idUsuario.
+                $sqlObtenerIdNegocio = "SELECT id FROM negocio WHERE idUsuario = :idUsuario";
+                $stmtObtenerIdNegocio = $conexion->prepare($sqlObtenerIdNegocio);
+                $stmtObtenerIdNegocio->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
+                $stmtObtenerIdNegocio->execute();
+                $resultado = $stmtObtenerIdNegocio->fetch(PDO::FETCH_ASSOC);
+ 
+                $idNegocio = $resultado['id'];
+        
+                $sqlUpdateNegocio = "UPDATE negocio SET nombre = :nuevoNombre, descripcion = :nuevaDescripcion, email = :nuevoEmail, telefono = :nuevoTelefono, calle = :nuevaCalle, horario = :nuevoHorario WHERE id = :idNegocio";
+        
+                $stmtUpdateNegocio = $conexion->prepare($sqlUpdateNegocio);
+        
+                $stmtUpdateNegocio->bindParam(':idNegocio', $idNegocio, PDO::PARAM_INT);
+                $stmtUpdateNegocio->bindParam(':nuevoNombre', $nuevoNombre, PDO::PARAM_STR);
+                $stmtUpdateNegocio->bindParam(':nuevaDescripcion', $nuevaDescripcion, PDO::PARAM_STR);
+                $stmtUpdateNegocio->bindParam(':nuevoEmail', $nuevoEmail, PDO::PARAM_STR);
+                $stmtUpdateNegocio->bindParam(':nuevoTelefono', $nuevoTelefono, PDO::PARAM_STR);
+                $stmtUpdateNegocio->bindParam(':nuevaCalle', $nuevaCalle, PDO::PARAM_STR);
+                $stmtUpdateNegocio->bindParam(':nuevoHorario', $nuevoHorario, PDO::PARAM_STR);
+        
+                $stmtUpdateNegocio->execute();
+        
+                $filasAfectadas = $stmtUpdateNegocio->rowCount();
+        
+                if($filasAfectadas > 0){
+                    echo "<h2>Se han modificado correctamente los datos del negocio.</h2>";
+                }else{
+                    echo "<h2>No han habido cambios en los datos del negocio.</h2>";
+                }
+        
+                $conexion = null;
+            }catch (PDOException $e){
+                echo "Error: " . $e->getMessage();
+                return false;
+            }
+        }
+
         public function getID(){
             return $this->id;
         }

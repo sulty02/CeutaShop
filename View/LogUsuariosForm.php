@@ -1,5 +1,12 @@
 <?php
-include_once("Assets/Templates/AperturaForm.php");
+    session_start();
+
+    if(isset($_SESSION['usuario'])){
+        header("Location: ../index.php");
+        exit();
+    }
+
+    include_once("Assets/Templates/AperturaForm.php");
 
     if(isset($_GET["resultadoRegistro"])){
         switch($_GET["resultadoRegistro"]){

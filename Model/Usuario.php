@@ -131,14 +131,40 @@
             }
         }
 
-        //...................................................................................................
-        public static function updateUsuario(){
-            
+        //OK
+        public static function updateUsuario($idUsuario, $nuevoUsername, $nuevoEmail, $nuevoTelefono){
+            try {
+                $conexion = CeutaShopDB::conectarDB();
+        
+                $sql = "UPDATE usuario SET username = :nuevoUsername, email = :nuevoEmail, telefono = :nuevoTelefono WHERE id = :idUsuario";
+        
+                $stmt = $conexion->prepare($sql);
+        
+                $stmt->bindParam(':idUsuario', $idUsuario, PDO::PARAM_INT);
+                $stmt->bindParam(':nuevoUsername', $nuevoUsername, PDO::PARAM_STR);
+                $stmt->bindParam(':nuevoEmail', $nuevoEmail, PDO::PARAM_STR);
+                $stmt->bindParam(':nuevoTelefono', $nuevoTelefono, PDO::PARAM_STR);
+        
+                $stmt->execute();
+        
+                $filasAfectadas = $stmt->rowCount();
+        
+                if($filasAfectadas > 0){
+                    echo "<h2>Se han modificado correctamente los datos</h2>";
+                }else{
+                    echo "<h2>No han habido cambios en los datos</h2>";
+                }
+
+                $conexion = null;
+            } catch (PDOException $e) {
+                $conexion = null;
+                echo "Error: " . $e->getMessage();
+                return false;
+            }
         }
-        //...................................................................................................
 
         //OK / Elimina tanto el usuario como el negocio si el role es negocio. Por lo que en el Model Negocio no hay un delete.
-        public static function deleteUsuarioByUsername(){
+        /*public static function deleteUsuarioByUsername(){
             $conexion = CeutaShopDB::conectarDB();
 
             //Si es un usuario de negocio se elimina de la tabla usuario y de la tabla negocio. 
@@ -164,7 +190,7 @@
             $stmtDeleteUsuario->execute();
 
             header("Location: ../index.php");
-        }
+        }*/
 
     //OK
         public function getID(){

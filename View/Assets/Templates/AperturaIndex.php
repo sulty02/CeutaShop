@@ -12,7 +12,7 @@
                 echo "<link rel='stylesheet' href='View/Assets/CSS/IndexNegocio.css'>";
                 
             //Con cualquier otra sesión se muestra el CSS de cliente.
-            }else if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "cliente" || $_SESSION["usuario"]["role"] == "invitado"))){
+            }else if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente")){
                 echo "<link rel='stylesheet' href='View/Assets/CSS/IndexCliente.css'>";
             }
                 

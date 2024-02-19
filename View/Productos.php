@@ -16,12 +16,16 @@
                 $nombreNegocio = $negocio["nombre"];
 
                 echo "<div class='producto'>
-                        <h2>" . $producto->getNombre() . "</h2>
-                        <img src='data:image/jpeg;base64,". base64_encode($producto->getImagen()) . "'/>
-                        <p>" . $producto->getDescripcion() . "</p>
-                        <p><strong>" . $producto->getPrecio() . "€</strong></p>
-                        <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
-                        <a class='boton' href='Controller/Carrito.php?idProducto=" . $idProducto . "&idNegocio=" . $idNegocio . "&unidades=" . $producto->getUnidades() . "'>Añadir al carrito</a>
+                           <img src='data:image/jpeg;base64,". base64_encode($producto->getImagen()) . "'/>
+
+                            <div class='producto-info'>
+                                <h2>" . $producto->getNombre() . "</h2>
+                                <p>" . $producto->getDescripcion() . "</p>
+                                <p><strong>" . $producto->getPrecio() . "€</strong></p>
+                                <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
+                                <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
+                                <a class='boton' href='Controller/Carrito.php?idProducto=" . $idProducto . "&idNegocio=" . $idNegocio . "&unidades=" . $producto->getUnidades() . "'>Añadir al carrito</a>
+                            </div>
                     </div>";
             }
         }else{
