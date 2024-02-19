@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+
     include_once("../Model/Negocio.php");
 
     if(isset($_POST["crear"]) && $_SERVER["REQUEST_METHOD"] == "POST"){

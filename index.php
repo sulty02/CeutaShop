@@ -1,4 +1,6 @@
 <?php
+/*Jorge Muñoz García*/
+
     session_start();
 
     include_once("View/Assets/Templates/AperturaIndex.php");

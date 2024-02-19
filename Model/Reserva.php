@@ -1,5 +1,5 @@
 <?php
-/*Jorge Muñoz García*/
+/*Miguel*/
     require_once("CeutaShopDB.php");
     
     //Esta clase servirá como plantilla para realizar operaciones CRUD en su tabla correspondiente.
