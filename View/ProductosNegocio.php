@@ -28,7 +28,7 @@
                             <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
                             <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
                             <a class='boton' href='View/EditarProductoForm.php?id=" . $producto->getID() . "'>Editar</a>
-                            <a class='boton' onclick='confirmarEliminarProducto(" . $producto->getID() . ")'>Eliminar</a>
+                            <a class='boton' href='javascript:void(0);' onclick='confirmarEliminarProducto(" . $producto->getID() . ")'>Eliminar</a>
                         </div>
                     </div>";
             }

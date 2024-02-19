@@ -42,7 +42,7 @@
                 //Si se ha iniciado la sesión con un usuario con role negocio se añade el botón añadir producto.
                 }else if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
                     echo "<a class='boton' href='javascript:void(0);' onclick='confirmarCerrarSesion()'>Cerrar sesión</a>";
-                    echo "<a class='boton' href='View/InsertarProducto.php'>Añadir producto</a>";
+                    echo "<a class='boton' href='View/InsertarProductoForm.php'>Añadir producto</a>";
                     echo "<a class='boton' href='Controller/Reservas.php'>Mis reservas</a>";
                     echo "<a class='boton' href='View/EditarPerfilForm.php'>Editar perfil</a>";
                 }

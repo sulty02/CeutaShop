@@ -98,6 +98,7 @@ header a {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1.3em;
 }
 
 h1{
@@ -117,6 +118,7 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 1.5em;
 }
 
 footer a {

@@ -4,12 +4,6 @@
         include_once("Model/Producto.php");
         include_once("Model/Negocio.php");
 
-        $comp = false;
-
-        if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente"){
-            $comp = true;
-        }
-
         //Obtenemos los artículos de la base de datos.
         $productos = Producto::getProductos();
 
@@ -31,7 +25,7 @@
                                 <p><strong>" . $producto->getPrecio() . "€</strong></p>
                                 <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
                                 <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
-                                <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ", $comp)'>Añadir al carrito</a>
+                                <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
                             </div>
                     </div>";
             }

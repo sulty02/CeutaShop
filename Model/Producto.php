@@ -1,6 +1,7 @@
 <?php
 /*Mohamed Abdeselam*/
     require_once("CeutaShopDB.php");
+    require_once("Negocio.php");
 
     //Esta clase servirá como plantilla para realizar operaciones CRUD en su tabla correspondiente.
     class Producto{
@@ -108,7 +109,88 @@
             } else {
                 return "No se encontró el negocio asociado al usuario.";
             }
-        }        
+        }
+        
+        public static function insertarProducto($producto){
+            try {
+                $conexion = CeutaShopDB::conectarDB();
+        
+                $idNegocio = Negocio::obtenerNegocioByIDUsuario($_SESSION["usuario"]["id"])["id"];
+        
+                $nombre = $producto->getNombre();
+                $descripcion = $producto->getDescripcion();
+                $tipo = $producto->getTipo();
+                $categorias = $producto->getCategorias();
+                $talla = $producto->getTalla();
+                $precio = $producto->getPrecio();
+                $unidades = $producto->getUnidades();
+                $imagen = $producto->getImagen();
+        
+                $sql = "INSERT INTO producto (nombre, descripcion, tipo, categorias, talla, precio, unidades, imagen, idNegocio) VALUES (:nombre, :descripcion, :tipo, :categorias, :talla, :precio, :unidades, :imagen, :idNegocio)";
+        
+                $stmt = $conexion->prepare($sql);
+        
+                $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+                $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
+                $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+                $stmt->bindParam(':categorias', $categorias, PDO::PARAM_STR);
+                $stmt->bindParam(':talla', $talla, PDO::PARAM_STR);
+                $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
+                $stmt->bindParam(':unidades', $unidades, PDO::PARAM_INT);
+                $stmt->bindParam(':imagen', $imagen, PDO::PARAM_LOB);
+                $stmt->bindParam(':idNegocio', $idNegocio, PDO::PARAM_INT);
+        
+                $stmt->execute();
+        
+                $conexion = null;
+        
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+                return false;
+            }
+        }
+
+        public static function actualizarProducto($producto, $idProducto) {
+            try {
+                $conexion = CeutaShopDB::conectarDB();
+        
+                $idNegocio = Negocio::obtenerNegocioByIDUsuario($_SESSION["usuario"]["id"])["id"];
+        
+                $nombre = $producto->getNombre();
+                $descripcion = $producto->getDescripcion();
+                $tipo = $producto->getTipo();
+                $categorias = $producto->getCategorias();
+                $talla = $producto->getTalla();
+                $precio = $producto->getPrecio();
+                $unidades = $producto->getUnidades();
+                $imagen = $producto->getImagen();
+        
+                $sql = "UPDATE producto SET nombre = :nombre, descripcion = :descripcion, tipo = :tipo, categorias = :categorias, talla = :talla, precio = :precio, unidades = :unidades, imagen = :imagen, idNegocio = :idNegocio WHERE id = :idProducto";
+        
+                $stmt = $conexion->prepare($sql);
+        
+                $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+                $stmt->bindParam(':descripcion', $descripcion, PDO::PARAM_STR);
+                $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+                $stmt->bindParam(':categorias', $categorias, PDO::PARAM_STR);
+                $stmt->bindParam(':talla', $talla, PDO::PARAM_STR);
+                $stmt->bindParam(':precio', $precio, PDO::PARAM_STR);
+                $stmt->bindParam(':unidades', $unidades, PDO::PARAM_INT);
+                $stmt->bindParam(':imagen', $imagen, PDO::PARAM_LOB);
+                $stmt->bindParam(':idNegocio', $idNegocio, PDO::PARAM_INT);
+                $stmt->bindParam(':idProducto', $idProducto, PDO::PARAM_INT);
+        
+                $stmt->execute();
+        
+                $conexion = null;
+        
+                return true;
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+                return false;
+            }
+        }
         
         //OK
         public static function eliminarProducto($idProducto){
@@ -136,49 +218,6 @@
                 return false;
             }
         }
-
-
-        /*Al recoger los datos en el controlador se crea un objeto Producto con los datos. 
-        Ese objeto llamará a la función. Si $_SESSION["usuario"]["role"] == "negocio"se 
-        tiene que obtener el idUsuario del negocio para insertar/modificar/eliminar el producto.*/
-        /*public function insertProductoByIDUsuario($idUsuario){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $insert = "INSERT INTO producto (nombre, descripcion, tipo, categorias, talla, precio, idNegocio) VALUES (:nombre, :descripcion, :tipo, :categorias, :talla, :precio, :idNegocio);";
-            
-            try{
-                $stmt = $conexion->prepare($insert);
-                $stmt->bindParam(":titulo", $this->titulo);
-                $stmt->bindParam(":contenido", $this->contenido);
-                $stmt->bindParam(":fecha", $this->fecha);
-
-                $stmt->execute();
-
-                //Verificamos si se ha insertado el elemento.
-                if($stmt->filaCount() > 0){
-                    return "Se han insertado los datos correctamente.";
-                }else{
-                    return "No se han insertado los datos. Puede que ya exista un artículo con el mismo título.";
-                }
-            }catch(PDOException $error) {
-                return "Error " . $error->getCode() . ": " . $error->getMessage();
-            }
-        }
-
-        public static function deleteProductoByIDUsuario($idNegocio){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $delete = "DELETE FROM producto WHERE id=:id;";
-            
-            $stmt = $conexion->prepare($delete);
-            $stmt->bindParam(":id", $id);
-
-            $stmt->execute();
-
-            return "";
-        }
-
-*/
 
     //OK
         public function getID(){
@@ -241,7 +280,7 @@
             return $this->imagen;
         }
         public function setImagen($imagen){
-            $this->precio = $imagen;
+            $this->imagen = $imagen;
         }
 
         public function getIDNegocio(){
