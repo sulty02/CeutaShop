@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+header a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.formulario-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.formulario {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50vw;
+}
+
+.formulario label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.formulario input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.formulario input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.formulario input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.productos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    gap: 20px;
+    justify-content: center;
+    margin-top: 3vh;
+    margin-left: 5vw;
+}
+
+.producto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 250px; 
+    margin: 0 auto; 
+}
+
+.producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.producto-info {
+    flex-grow: 1;
+}
+
+.boton {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+}
+
+h1{
+    margin: 0 auto;
+    text-align: center;
+}
+
+img{
+    width: 500px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
