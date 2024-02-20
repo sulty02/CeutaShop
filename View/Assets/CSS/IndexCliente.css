@@ -1,8 +1,9 @@
-/*Jorge Muñoz García, Mohamed Abdeselam y Miguel*/
-    
+/* Jorge Muñoz García, Mohamed Abdeselam y Miguel */
+
 body {
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 header {
@@ -19,13 +20,36 @@ header a {
     text-decoration: none;
 }
 
+.buscador {
+    text-align: center;
+    margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+}
+
+label {
+    font-size: 18px;
+}
+
+#search {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* Estilo adicional para resaltar el input al enfocarse */
+#search:focus {
+    outline: none;
+    border-color: #007bff; /* Cambia el color al que desees */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto de sombra al enfocarse */
+}
+
 .productos-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin-top: 3vh;
-    margin-left: 5vw;
+    margin-bottom: 10vh;
 }
 
 .producto {
@@ -37,7 +61,7 @@ header a {
     border: 1px solid #ccc;
     border-radius: 5px;
     max-width: 250px;
-    margin: 0 auto;
+    margin: 20px;
 }
 
 .producto img {
@@ -62,13 +86,16 @@ header a {
     font-size: 1.3em;
 }
 
-h1{
+h1 {
     margin: 0 auto;
     text-align: center;
+    font-size: 2em;
 }
 
-img{
-    width: 500px;
+img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
 }
 
 footer {
@@ -97,8 +124,7 @@ footer a {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
@@ -109,7 +135,7 @@ footer a {
     width: 80%;
 }
 
-#confirmarBtn, #cancelarBtn, #confirmarLogoutBtn, #cancelarLogoutBtn, #confirmarSesionBtn {
+button {
     background-color: #4CAF50;
     color: white;
     padding: 10px 15px;
@@ -117,8 +143,17 @@ footer a {
     border: none;
     border-radius: 3px;
     cursor: pointer;
+    font-size: 1.3em;
+}
+
+button:hover {
+    background-color: #45a049;
 }
 
 #cancelarBtn, #cancelarLogoutBtn {
     background-color: #ccc;
+}
+
+#cancelarBtn:hover, #cancelarLogoutBtn:hover {
+    background-color: #999;
 }

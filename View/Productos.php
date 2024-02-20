@@ -1,36 +1,43 @@
-<div class="productos-container">
-    <?php
-    /*Jorge Muñoz García*/
-        include_once("Model/Producto.php");
-        include_once("Model/Negocio.php");
+<?php
+    include_once(__DIR__ . "/../Model/Producto.php");
+    include_once(__DIR__ . "/../Model/Negocio.php");
 
-        //Obtenemos los artículos de la base de datos.
-        $productos = Producto::getProductos();
+    //Obtener el término de búsqueda desde la solicitud AJAX.
+    $terminoBusqueda = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-        if(isset($productos) && count($productos) > 0){
-            //Recorremos el array mostrando cada artículo en un div.
-            foreach($productos as $producto){
-                $idProducto = $producto->getID();
-                
-                $negocio = Negocio::obtenerNegocioByIDProducto($idProducto);
-                $idNegocio = $negocio["id"];
-                $nombreNegocio = $negocio["nombre"];
+    $output = "";
+    
+    $productos = Producto::buscarProductos($terminoBusqueda);
 
-                echo "<div class='producto'>
-                           <img src='data:image/jpeg;base64,". base64_encode($producto->getImagen()) . "'/>
+    echo "<div class='productos-container' id='productos-container' hidden>";
 
-                            <div class='producto-info'>
-                                <h2>" . $producto->getNombre() . "</h2>
-                                <p>" . $producto->getDescripcion() . "</p>
-                                <p><strong>" . $producto->getPrecio() . "€</strong></p>
-                                <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
-                                <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
-                                <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
-                            </div>
-                    </div>";
-            }
-        }else{
-            echo "<h2>Aún no hay productos disponibles</h2>";
+    if (isset($productos) && count($productos) > 0) {
+        foreach ($productos as $producto) {
+            $idProducto = $producto->getID();
+
+            $negocio = Negocio::obtenerNegocioByIDProducto($idProducto);
+            $idNegocio = $negocio["id"];
+            $nombreNegocio = $negocio["nombre"];
+
+            $output .= "<div class='producto'>
+                    <img src='data:image/jpeg;base64," . base64_encode($producto->getImagen()) . "'/>
+                    <div class='producto-info'>
+                        <h2>" . $producto->getNombre() . "</h2>
+                        <p>" . $producto->getDescripcion() . "</p>
+                        <p><strong>" . $producto->getPrecio() . "€</strong></p>
+                        <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
+                        <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
+                        <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
+                    </div>
+                </div>";
         }
-    ?>
-</div>
+    } else {
+        $output = "<h2>No se encontraron productos con el término de búsqueda: $terminoBusqueda</h2>";
+    }
+
+    if(isset($output)){
+        echo $output;
+    }    
+
+    echo "</div>";
+?>

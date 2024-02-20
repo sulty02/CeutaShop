@@ -60,11 +60,10 @@ header a {
 
 .productos-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
     justify-content: center;
     margin-top: 3vh;
-    margin-left: 5vw;
+    margin-bottom: 10vh;
 }
 
 .producto {
@@ -106,8 +105,16 @@ h1{
     text-align: center;
 }
 
+h3{
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2em;
+}
+
 img{
-    width: 500px;
+    width: 20vw;
 }
 
 footer {

@@ -52,6 +52,29 @@
             return $productos;
         }
 
+        public static function buscarProductos($terminoBusqueda){
+            $conexion = CeutaShopDB::conectarDB();
+            $productos = array();
+        
+            $select = "SELECT * FROM producto WHERE nombre LIKE :terminoBusqueda OR descripcion LIKE :terminoBusqueda OR categorias LIKE :terminoBusqueda OR talla LIKE :terminoBusqueda OR precio LIKE :terminoBusqueda OR tipo LIKE :terminoBusqueda;";
+            $stmt = $conexion->prepare($select);
+        
+            $terminoBusqueda = "%$terminoBusqueda%";
+            $stmt->bindParam(':terminoBusqueda', $terminoBusqueda, PDO::PARAM_STR);
+        
+            $stmt->execute();
+        
+            $filas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+            foreach($filas as $fila){
+                $producto = new Producto($fila['nombre'], $fila['descripcion'], $fila['tipo'], $fila['categorias'], $fila['talla'], $fila['precio'], $fila['unidades'], $fila['imagen'], $fila['id'], $fila['idNegocio']);
+                array_push($productos, $producto);
+            }
+        
+            return $productos;
+        }
+        
+
         //OK
         public static function getProductoByID($idProducto){
             $conexion = CeutaShopDB::conectarDB();

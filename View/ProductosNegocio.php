@@ -1,4 +1,4 @@
-<h2>Tus productos: </h2>
+<h3>Tus productos </h3>
 <div class="productos-container">
     <?php
     /*Jorge Muñoz García y Mohamed Abdeselam*/
