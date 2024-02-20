@@ -12,6 +12,8 @@
 
         echo "
             <form class='formulario' action='../Controller/InsertarProducto.php' enctype='multipart/form-data' method='POST'>
+                <h2>Añadir producto</h2>
+
                 <label>Nombre: </label>
                 <input type='text' name='nombre' required>
 
@@ -27,7 +29,7 @@
 
                 <p></p>
 
-                <label>Categorías: Sepáralas con ', '</label>
+                <label>Categorías: Sepáralas con espacios</label>
                 <input type='text' name='categorias' required>
 
                 <p></p>

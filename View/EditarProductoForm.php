@@ -25,6 +25,8 @@
 
     echo "<div class=contenedor-formulario>
         <form class='formulario' action='../Controller/EditarProducto.php' enctype='multipart/form-data' method='POST'>
+          <h2>Editar producto</h2>
+
           <label>Nombre: </label>
           <input type='text' name='nombre' value='$nombre' required>
 
@@ -40,7 +42,7 @@
 
           <p></p>
 
-          <label>Categorías: Sepáralas con ', '</label>
+          <label>Categorías: Sepáralas con espacios</label>
           <input type='text' name='categorias' value='$categorias' required>
 
           <p></p>

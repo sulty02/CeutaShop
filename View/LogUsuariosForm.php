@@ -10,6 +10,8 @@
 
     include_once("Assets/Templates/AperturaForm.php");
 
+    echo "<a class='boton' href='../index.php'>Volver</a>";
+
     if(isset($_GET["resultadoRegistro"])){
         switch($_GET["resultadoRegistro"]){
             case 1:
