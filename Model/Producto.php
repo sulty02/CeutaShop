@@ -1,5 +1,5 @@
 <?php
-/*Mohamed Abdeselam*/
+/*Jorge Muñoz García y Mohamed Abdeselam*/
     require_once("CeutaShopDB.php");
     require_once("Negocio.php");
 
