@@ -35,13 +35,13 @@
                 
                 //Si se ha iniciado la sesión con un usuario con role negocio o cliente se muestra el botón cerrar sesión.
                 }else if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente"){
-                    echo "<a class='boton' href='Controller/CerrarSesion.php'>Cerrar sesión</a>";
+                    echo "<a class='boton' href='javascript:void(0);' onclick='confirmarCerrarSesion()'>Cerrar sesión</a>";
                     echo "<a class='boton' href='Controller/Reservas.php'>Mis reservas</a>";
                     echo "<a class='boton' href='View/EditarPerfilForm.php'>Editar perfil</a>";
                 
                 //Si se ha iniciado la sesión con un usuario con role negocio se añade el botón añadir producto.
                 }else if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
-                    echo "<a class='boton' href='Controller/CerrarSesion.php'>Cerrar sesión</a>";
+                    echo "<a class='boton' href='javascript:void(0);' onclick='confirmarCerrarSesion()'>Cerrar sesión</a>";
                     echo "<a class='boton' href='View/InsertarProducto.php'>Añadir producto</a>";
                     echo "<a class='boton' href='Controller/Reservas.php'>Mis reservas</a>";
                     echo "<a class='boton' href='View/EditarPerfilForm.php'>Editar perfil</a>";
@@ -54,6 +54,21 @@
                     <p>¿Estás seguro de que deseas eliminar este producto?</p>
                     <button id='confirmarBtn'>Confirmar</button>
                     <button id='cancelarBtn'>Cancelar</button>
+                    </div>
+                </div>
+                
+                <div id='logoutModal' class='modal'>
+                    <div class='modal-content'>
+                        <p>¿Estás seguro de que deseas cerrar sesión?</p>
+                        <button id='confirmarLogoutBtn'>Confirmar</button>
+                        <button id='cancelarLogoutBtn'>Cancelar</button>
+                    </div>
+                </div>
+                
+                <div id='sesionModal' class='modal'>
+                    <div class='modal-content'>
+                        <p id='sesionMensaje'></p>
+                        <button id='confirmarSesionBtn'>OK</button>
                     </div>
                 </div>";
 ?>

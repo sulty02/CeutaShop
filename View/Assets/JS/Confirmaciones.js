@@ -1,5 +1,19 @@
 function confirmarCerrarSesion(){
-  
+  //Mostrar el modal
+  var modal = document.getElementById("logoutModal");
+  modal.style.display = "block";
+
+  //Confirmar
+  var confirmarBtn = document.getElementById("confirmarLogoutBtn");
+  confirmarBtn.onclick = function() {
+    window.location.href = "Controller/CerrarSesion.php";
+  };
+
+  //Cancelar
+  var cancelarBtn = document.getElementById("cancelarLogoutBtn");
+  cancelarBtn.onclick = function() {
+    modal.style.display = "none";
+  };
 }
 
 function confirmarEliminarProducto(idProducto) {
@@ -18,4 +32,24 @@ function confirmarEliminarProducto(idProducto) {
   cancelarBtn.onclick = function() {
     modal.style.display = "none";
   };
+}
+
+function comprobarSesion(idProducto, idNegocio, unidades, comp){
+  var sesionModal = document.getElementById("sesionModal");
+  var sesionMensaje = document.getElementById("sesionMensaje");
+  var confirmarSesionBtn = document.getElementById("confirmarSesionBtn");
+
+  if(comp == true){
+    //La sesión está seteada, redirige a Controller/AniadirAlCarrito.php
+    window.location.href = "Controller/AniadirAlCarrito.php?accion=comprar&idProducto=" + idProducto + "&idNegocio=" + idNegocio + "&unidades=" + unidades;
+  }
+
+  //La sesión no está seteada, muestra el modal
+  sesionMensaje.innerHTML = "Para añadir un producto al carrito debes iniciar sesión";
+  sesionModal.style.display = "block";
+
+  confirmarSesionBtn.onclick = function(){
+    sesionModal.style.display = "none";
+  };
+  
 }

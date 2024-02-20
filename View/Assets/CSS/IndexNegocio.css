@@ -146,7 +146,7 @@ footer a {
     width: 80%;
 }
 
-#confirmarBtn, #cancelarBtn {
+#confirmarBtn, #cancelarBtn, #confirmarLogoutBtn, #cancelarLogoutBtn {
     background-color: #4CAF50;
     color: white;
     padding: 10px 15px;
@@ -156,6 +156,6 @@ footer a {
     cursor: pointer;
 }
 
-#cancelarBtn {
+#cancelarBtn, #cancelarLogoutBtn {
     background-color: #ccc;
 }

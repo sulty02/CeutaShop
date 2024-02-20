@@ -138,48 +138,6 @@
         }
 
 
-        /*Al recoger los datos en el controlador se crea un objeto Producto con los datos. 
-        Ese objeto llamará a la función. Si $_SESSION["usuario"]["role"] == "negocio"se 
-        tiene que obtener el idUsuario del negocio para insertar/modificar/eliminar el producto.*/
-        /*public function insertProductoByIDUsuario($idUsuario){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $insert = "INSERT INTO producto (nombre, descripcion, tipo, categorias, talla, precio, idNegocio) VALUES (:nombre, :descripcion, :tipo, :categorias, :talla, :precio, :idNegocio);";
-            
-            try{
-                $stmt = $conexion->prepare($insert);
-                $stmt->bindParam(":titulo", $this->titulo);
-                $stmt->bindParam(":contenido", $this->contenido);
-                $stmt->bindParam(":fecha", $this->fecha);
-
-                $stmt->execute();
-
-                //Verificamos si se ha insertado el elemento.
-                if($stmt->filaCount() > 0){
-                    return "Se han insertado los datos correctamente.";
-                }else{
-                    return "No se han insertado los datos. Puede que ya exista un artículo con el mismo título.";
-                }
-            }catch(PDOException $error) {
-                return "Error " . $error->getCode() . ": " . $error->getMessage();
-            }
-        }
-
-        public static function deleteProductoByIDUsuario($idNegocio){
-            $conexion = CeutaShopDB::conectarDB();
-            
-            $delete = "DELETE FROM producto WHERE id=:id;";
-            
-            $stmt = $conexion->prepare($delete);
-            $stmt->bindParam(":id", $id);
-
-            $stmt->execute();
-
-            return "";
-        }
-
-*/
-
     //OK
         public function getID(){
             return $this->id;
