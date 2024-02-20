@@ -22,7 +22,7 @@ header a {
 
 .buscador {
     text-align: center;
-    margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+    margin-top: 50px;
 }
 
 label {
@@ -37,11 +37,10 @@ label {
     margin-top: 5px;
 }
 
-/* Estilo adicional para resaltar el input al enfocarse */
 #search:focus {
     outline: none;
-    border-color: #007bff; /* Cambia el color al que desees */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Efecto de sombra al enfocarse */
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .productos-container {

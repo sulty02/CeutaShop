@@ -59,8 +59,8 @@ header a {
 }
 
 .productos-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22%, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin-top: 3vh;
     margin-bottom: 10vh;
@@ -74,8 +74,8 @@ header a {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    max-width: 250px; 
-    margin: 0 auto; 
+    max-width: 250px;
+    margin: 20px;
 }
 
 .producto img {
