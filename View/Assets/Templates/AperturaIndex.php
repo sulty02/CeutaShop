@@ -1,5 +1,5 @@
 <?php
-/*Jorge Muñoz García y Mohamed Abdeselam*/
+/*Jorge Muñoz García*/
     require_once("Model/Negocio.php");
 
     echo "<!DOCTYPE html>
