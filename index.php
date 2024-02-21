@@ -25,7 +25,7 @@
     //Si el usuario es invitado o la sesión no está iniciada se muestran los productos.
     }else if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && ($_SESSION["usuario"]["role"] == "invitado"))){
         echo "<div class='buscador'>
-                <input type='text' placeholder='Busca tus productos...' id='search' name='search' oninput='cargarProductos()'>
+                <input type='text' placeholder='Busca tus productos aquí!' id='search' name='search' oninput='cargarProductos()'>
             </div>";
 
         include_once("View/Productos.php");
@@ -33,7 +33,7 @@
     //Si el usuario es cliente se muestran los productos y el carrito.
     }else if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente"){
         echo "<div class='buscador'>
-                <input type='text' id='search' name='search' oninput='cargarProductos()'>
+                <input type='text' placeholder='Busca tus productos aquí!' id='search' name='search' oninput='cargarProductos()'>
             </div>";
 
         include_once("View/Productos.php");

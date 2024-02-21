@@ -42,13 +42,15 @@ function comprobarSesion(idProducto, idNegocio, unidades, comp){
   var confirmarSesionBtn = document.getElementById("confirmarSesionBtn");
 
   if(comp == true){
-    //La sesión está seteada, redirige a Controller/AniadirAlCarrito.php
+    //Si la sesión está seteada redirige a Controller/AniadirAlCarrito.php
     window.location.href = "Controller/AniadirAlCarrito.php?accion=comprar&idProducto=" + idProducto + "&idNegocio=" + idNegocio + "&unidades=" + unidades;
+  }else{
+    //Si la sesión no está seteada se muestra el modal con el mensaje.
+    sesionMensaje.innerHTML = "Para añadir un producto al carrito debes iniciar sesión";
+    sesionModal.style.display = "block";
   }
 
-  //La sesión no está seteada, muestra el modal
-  sesionMensaje.innerHTML = "Para añadir un producto al carrito debes iniciar sesión";
-  sesionModal.style.display = "block";
+  
 
   confirmarSesionBtn.onclick = function(){
     sesionModal.style.display = "none";

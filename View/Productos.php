@@ -3,6 +3,12 @@
     include_once(__DIR__ . "/../Model/Producto.php");
     include_once(__DIR__ . "/../Model/Negocio.php");
 
+    $sesionIniciada = false;
+
+    if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "cliente"){
+        $sesionIniciada = true;
+    }
+
     //Obtener el término de búsqueda desde la solicitud AJAX.
     $terminoBusqueda = isset($_GET['search']) ? trim($_GET['search']) : '';
 
@@ -28,7 +34,7 @@
                         <p><strong>" . $producto->getPrecio() . "€</strong></p>
                         <p><strong>Tienda: </strong>" . $nombreNegocio . "</p>
                         <p>Unidades disponibles: " . $producto->getUnidades() . "</p>
-                        <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ")'>Añadir al carrito</a>
+                        <a class='boton' onclick='comprobarSesion($idProducto, $idNegocio, " . $producto->getUnidades() . ", $sesionIniciada)'>Añadir al carrito</a>
                     </div>
                 </div>";
         }
