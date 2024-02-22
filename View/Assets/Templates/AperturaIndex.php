@@ -22,9 +22,11 @@
             </head>
             <body>
             <header>";
-            
+
                 if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
-                    echo "<h1>CeutaShop - Bienvenido " . Negocio::obtenerNegocioByIDUsuario($_SESSION["usuario"]["id"])["nombre"] . "</h1>";
+                    $negocio = Negocio::obtenerNegocioByIDUsuario($_SESSION["usuario"]["id"]);
+
+                    echo "<h1>CeutaShop - ¡Bienvenido! " . $negocio . "</h1>";
                 }else{
                     echo "<h1>CeutaShop</h1>";
                 }

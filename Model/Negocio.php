@@ -113,7 +113,7 @@
             if($resultadoNegocio) {
                 return $resultadoNegocio;
             } else {
-                return "No se encontró el negocio asociado al usuario.";
+                return "Registra tu negocio para comenzar";
             }
         }        
 

@@ -28,6 +28,8 @@
         $telefono = $usuario->getTelefono();
 
         echo "<form class='formulario' action='../Controller/EditarPerfiles.php' method='POST'>
+                <h2>Editar usuario</h2>
+
                 <label>Nombre de usuario: </label>
                 <input type='text' name='username' value='$username'>
                 
@@ -52,6 +54,8 @@
         $telefono = $usuario->getTelefono();
 
         echo "<form class='formulario' action='../Controller/EditarPerfiles.php' method='POST'>
+                <h2>Editar usuario</h2>            
+                
                 <label>Nombre de usuario: </label>
                 <input type='text' name='username' value='$username'>
                 
@@ -80,6 +84,8 @@
         $horario = $negocio["horario"];  
 
         echo "<form class='formulario' action='../Controller/EditarPerfiles.php' method='POST'>
+                <h2>Editar negocio</h2>            
+        
                 <label>Nombre del negocio: </label>
                 <input type='text' name='nombre' value='$nombre'>
                 
