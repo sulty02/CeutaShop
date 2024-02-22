@@ -25,8 +25,9 @@
 
                 if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
                     $negocio = Negocio::obtenerNegocioByIDUsuario($_SESSION["usuario"]["id"]);
+                    $nombreNegocio = count($negocio) > 0 ? $negocio["nombre"] : $negocio;
 
-                    echo "<h1>CeutaShop - ¡Bienvenido! " . $negocio . "</h1>";
+                    echo "<h1>CeutaShop - ¡Bienvenido! " . $nombreNegocio . "</h1>";
                 }else{
                     echo "<h1>CeutaShop</h1>";
                 }
