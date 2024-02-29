@@ -21,15 +21,9 @@
             echo "<title>CeutaShop</title>
             </head>
             <body>
-            <header>";
-
-                if(isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "negocio"){
-                    
-
-                    echo "<h1>CeutaShop - ¡Bienvenido!</h1>";
-                }else{
-                    echo "<h1>CeutaShop</h1>";
-                }
+            <header>
+            
+                <h1>CeutaShop</h1>";
             
                 //Si aún no se ha iniado la sesión con un usuario se muestra el botón iniciar sesión.
                 if(!isset($_SESSION["usuario"]) || (isset($_SESSION["usuario"]) && $_SESSION["usuario"]["role"] == "invitado")){
